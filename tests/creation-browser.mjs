@@ -1,0 +1,20 @@
+import {chromium} from '@playwright/test';
+import assert from 'node:assert/strict';
+import express from 'express';
+import {createApp} from '../server/app.js';
+import {mkdtempSync,rmSync,mkdirSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join,resolve} from 'node:path';
+const dir=mkdtempSync(join(tmpdir(),'cms-create-'));
+const {app,db}=createApp(join(dir,'test.sqlite'));
+app.use(express.static(resolve('dist')));app.get('/{*path}',(req,res)=>res.sendFile(resolve('dist/index.html')));
+const server=app.listen(0,'127.0.0.1');await new Promise(r=>server.once('listening',r));const base=`http://127.0.0.1:${server.address().port}`;
+let browser;
+try{
+ browser=await chromium.launch({channel:'msedge',headless:true});const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(base+'/booking');await page.getByLabel('Nama lengkap').fill('Public No Phone');await page.getByLabel('Tanggal acara').fill('2028-12-20');await page.getByLabel('Lokasi acara').fill('Jakarta');await page.getByLabel('Jumlah orang makeup').fill('1');await page.getByLabel('Instagram').fill('@public');await page.getByRole('checkbox').check();assert.equal(await page.getByLabel('Nomor WhatsApp').evaluate(e=>e.required),false);await page.getByRole('button',{name:'Kirim permintaan'}).click();await page.getByText('Permintaan tersimpan.').waitFor();
+ await page.goto(base+'/admin');await page.getByLabel('Username').fill('testowner');await page.getByLabel('Password',{exact:true}).fill('Isolated-only-password-123!');await page.getByRole('button',{name:'Buat admin & masuk'}).click();await page.getByText('Public No Phone',{exact:true}).waitFor();await page.getByRole('button',{name:'Detail',exact:true}).click();assert.equal(await page.getByRole('dialog').getByRole('link',{name:'Hubungi melalui WhatsApp'}).count(),0);await page.getByRole('dialog').getByText('@public',{exact:true}).waitFor();await page.getByLabel('Tutup detail').click();
+ await page.getByRole('button',{name:'Tambah Booking',exact:true}).click();await page.getByRole('button',{name:'Custom',exact:false}).click();await page.getByLabel('Nama lengkap').fill('Admin No Phone');await page.getByLabel('Tanggal acara').fill('2028-12-21');await page.getByLabel('Lokasi acara').fill('Bandung');await page.getByLabel('Kebutuhan khusus').fill('Private custom event');for(const [label,value] of [['Instagram','@adminig'],['Facebook','Admin FB'],['TikTok','@admintok']])await page.getByLabel(label).fill(value);assert.equal(await page.getByRole('checkbox').count(),0);await page.getByLabel('Nomor WhatsApp').fill('invalid');assert.equal(await page.getByLabel('Nomor WhatsApp').evaluate(e=>e.checkValidity()),false);await page.getByLabel('Nomor WhatsApp').fill('');await page.getByRole('button',{name:'Simpan booking',exact:true}).click();await page.getByText('Booking berhasil ditambahkan.').waitFor();await page.reload();await page.getByRole('row').filter({hasText:'Admin No Phone'}).getByRole('button',{name:'Detail'}).click();for(const value of ['@adminig','Admin FB','@admintok'])await page.getByRole('dialog').getByText(value,{exact:true}).waitFor();assert.equal(await page.getByRole('dialog').getByRole('link',{name:'Hubungi melalui WhatsApp'}).count(),0);
+ mkdirSync('artifacts',{recursive:true});await page.screenshot({path:'artifacts/admin-social-detail.png',fullPage:true});await page.getByLabel('Tutup detail').click();await page.setViewportSize({width:390,height:844});await page.getByRole('button',{name:'Tambah Booking',exact:true}).click();assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await page.screenshot({path:'artifacts/admin-create-mobile.png',fullPage:true});assert.deepEqual(errors,[]);assert.equal(db.prepare('SELECT count(*) AS n FROM bookings').get().n,2);
+ console.log('PASS creation browser: public/admin blank phone; social persistence after reload; hidden WA; admin CSRF submit; invalid supplied phone; mobile; zero page errors; isolated SQLite');
+}finally{await browser?.close();await new Promise(r=>server.close(r));db.close();rmSync(dir,{recursive:true,force:true});}
