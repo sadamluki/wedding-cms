@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Booking | Xavier Pro Wedding</title>
+  <meta name="description" content="Kirim permintaan booking ke Xavier Pro Wedding.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        screens: { 'xs':'375px','sm':'640px','md':'768px','lg':'992px','xl':'1280px','2xl':'1536px' },
+        extend: {
+          colors: { brand: { cream:'#F8F4EE', navy:'#0F1C2E', gold:'#C3924F', 'gold-light':'#D4A86A', gray:'#6B7280', 'light-gray':'#E5E7EB', border:'#E2E8F0' } },
+          fontFamily: { serif:['Cormorant Garamond','Georgia','serif'], sans:['Plus Jakarta Sans','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root{--bg-cream:#F8F4EE;--navy-dark:#0F1C2E;--gold-accent:#C3924F}
+    body{background-color:var(--bg-cream);font-family:'Plus Jakarta Sans',sans-serif;color:#374151;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    .font-serif-heading{font-family:'Cormorant Garamond',serif}
+    .fluid-hero-title{font-size:clamp(2.25rem,6.5vw,4rem);line-height:1.08}
+    .fluid-card-title{font-size:clamp(1.65rem,4vw,2.25rem);line-height:1.15}
+    .custom-input{transition:all .2s;border:1px solid #E2E8F0;background:#FFF;min-height:46px}
+    .custom-input:focus{outline:none;border-color:var(--navy-dark);box-shadow:0 0 0 1px var(--navy-dark)}
+    .custom-textarea{transition:all .2s;border:1px solid #E2E8F0;background:#FFF;min-height:100px;resize:vertical}
+    .custom-textarea:focus{outline:none;border-color:var(--navy-dark);box-shadow:0 0 0 1px var(--navy-dark)}
+    .service-card{transition:all .2s;cursor:pointer;user-select:none;touch-action:manipulation}
+    .service-card.active{background:var(--navy-dark);border-color:var(--navy-dark);color:#FFF;box-shadow:0 4px 14px rgba(15,28,46,.15)}
+    .service-card.active .card-subtitle{color:#9CA3AF}
+    .service-card:not(.active){background:#FFF;border-color:#E2E8F0;color:#1F2937}
+    .service-card:not(.active):hover{border-color:#CBD5E1;transform:translateY(-1px)}
+    .service-card:not(.active) .card-subtitle{color:#6B7280}
+    input[type="date"]::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.6;filter:invert(.3)}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-gold selection:text-white antialiased">
+
+  <header class="w-full max-w-7xl mx-auto px-4 xs:px-6 lg:px-12 py-6 lg:py-8 flex justify-between items-center">
+    <a href="index.html" class="flex items-center space-x-3 no-underline">
+      <span class="font-serif-heading text-4xl sm:text-5xl font-normal tracking-wide text-brand-gold">X</span>
+      <div class="flex flex-col text-left leading-tight">
+        <span class="font-bold tracking-[0.25em] text-xs sm:text-sm text-brand-navy">XAVIER</span>
+        <span class="text-[8px] sm:text-[9px] tracking-[0.3em] font-medium text-brand-gold uppercase">PRO WEDDING</span>
+      </div>
+    </a>
+    <nav class="flex gap-5 sm:gap-8 text-xs sm:text-sm">
+      <a href="index.html" class="text-gray-600 hover:text-brand-navy no-underline">← Website</a>
+    </nav>
+  </header>
+
+  <main class="w-full max-w-7xl mx-auto px-4 xs:px-6 lg:px-12 py-4 lg:py-8 flex-grow">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 xs:gap-10 lg:gap-16 items-start">
+      <div class="lg:col-span-5 space-y-6 sm:space-y-8 pt-2 lg:pt-6 text-left">
+        <div class="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-brand-gold uppercase">XAVIER PRO WEDDING · BOOKING</div>
+        <h1 class="font-serif-heading fluid-hero-title text-brand-navy font-normal">Awal indah untuk <br/><span class="italic text-brand-gold">cerita Anda.</span></h1>
+        <p class="text-gray-600 text-sm sm:text-base leading-relaxed max-w-lg">Makeup yang personal. Dekorasi yang bermakna.<br class="hidden xs:inline"/> Ceritakan rencana acara Anda, kami bantu mewujudkannya.</p>
+        <div class="relative pl-5 sm:pl-6 border-l-2 border-brand-gold space-y-2.5 sm:space-y-3 py-1">
+          <div class="text-xs sm:text-sm text-gray-700 font-medium">01 Pilih layanan</div>
+          <div class="text-xs sm:text-sm text-gray-700 font-medium">02 Ceritakan acara</div>
+          <div class="text-xs sm:text-sm text-gray-700 font-medium">03 Konsultasi bersama</div>
+        </div>
+        <p class="font-serif-heading italic text-gray-600 text-base sm:text-xl leading-snug max-w-md pt-1 sm:pt-2">Setiap acara memiliki ceritanya sendiri. Penawaran disusun setelah konsultasi—tanpa harga paket publik.</p>
+      </div>
+      <div class="lg:col-span-7 w-full">
+        <div class="bg-white rounded-2xl p-5 xs:p-6 sm:p-10 shadow-[0_10px_40px_rgba(0,0,0,0.03)] border border-gray-100/80 w-full">
+          <div class="space-y-1 mb-6">
+            <span class="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-brand-gold uppercase block">RENCANAKAN HARI ISTIMEWA</span>
+            <h2 class="font-serif-heading fluid-card-title text-brand-navy font-normal">Permintaan booking</h2>
+            <p class="text-xs text-gray-500 pt-1">Semua kolom bertanda * wajib diisi.</p>
+          </div>
+          <form id="bookingForm" class="space-y-5 sm:space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="serviceGrid">
+              <div onclick="selectPkg(this,'makeup')" class="service-card active p-3.5 sm:p-4 rounded-xl border flex flex-col justify-between min-h-[72px]"><span class="font-semibold text-sm">Makeup</span><span class="card-subtitle text-xs mt-1">Pesona yang autentik</span></div>
+              <div onclick="selectPkg(this,'makeup_dekor')" class="service-card p-3.5 sm:p-4 rounded-xl border flex flex-col justify-between min-h-[72px]"><span class="font-semibold text-sm">Makeup & Dekor</span><span class="card-subtitle text-xs mt-1">Satu harmoni istimewa</span></div>
+              <div onclick="selectPkg(this,'dekor')" class="service-card p-3.5 sm:p-4 rounded-xl border flex flex-col justify-between min-h-[72px]"><span class="font-semibold text-sm">Dekorasi</span><span class="card-subtitle text-xs mt-1">Ruang penuh cerita</span></div>
+              <div onclick="selectPkg(this,'custom')" class="service-card p-3.5 sm:p-4 rounded-xl border flex flex-col justify-between min-h-[72px]"><span class="font-semibold text-sm">Custom</span><span class="card-subtitle text-xs mt-1">Sesuai kebutuhan Anda</span></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div><label class="block text-xs font-semibold text-gray-700 mb-1.5">Nama lengkap *</label><input name="name" required maxlength="100" autocomplete="name" placeholder="Nama Anda" class="custom-input w-full px-3.5 py-2.5 text-sm rounded-lg text-gray-800 placeholder-gray-400"></div>
+              <div><label class="block text-xs font-semibold text-gray-700 mb-1.5">Nomor WhatsApp *</label><input name="phone" type="tel" pattern="\+?[0-9]{9,15}" required placeholder="081234567890" autocomplete="tel" class="custom-input w-full px-3.5 py-2.5 text-sm rounded-lg text-gray-800 placeholder-gray-400"></div>
+              <div><label class="block text-xs font-semibold text-gray-700 mb-1.5">Tanggal acara *</label><input name="date" type="date" id="eventDate" required class="custom-input w-full px-3.5 py-2.5 text-sm rounded-lg text-gray-800"></div>
+              <div><label class="block text-xs font-semibold text-gray-700 mb-1.5">Lokasi acara *</label><input name="location" required maxlength="500" placeholder="Kota dan nama venue" class="custom-input w-full px-3.5 py-2.5 text-sm rounded-lg text-gray-800 placeholder-gray-400"></div>
+              <div id="makeupField"><label class="block text-xs font-semibold text-gray-700 mb-1.5">Jumlah orang makeup *</label><input name="makeupPeople" type="number" min="1" max="100" class="custom-input w-full px-3.5 py-2.5 text-sm rounded-lg text-gray-800 placeholder-gray-400" placeholder="1"></div>
+              <div id="themeField" hidden><label class="block text-xs font-semibold text-gray-700 mb-1.5">Tema / konsep dekorasi (opsional)</label><input name="theme" maxlength="300" placeholder="Contoh: intimate garden" class="custom-input w-full px-3.5 py-2.5 text-sm rounded-lg text-gray-800 placeholder-gray-400"></div>
+            </div>
+            <div id="customField" hidden><label class="block text-xs font-semibold text-gray-700 mb-1.5">Kebutuhan khusus *</label><textarea name="requirements" maxlength="2000" placeholder="Layanan yang dibutuhkan, konsep, dan detail acara" class="custom-textarea w-full px-3.5 py-2.5 text-sm rounded-lg text-gray-800 placeholder-gray-400"></textarea></div>
+            <div class="flex items-start space-x-3 pt-2">
+              <input type="checkbox" name="consent" required class="mt-0.5 h-4 w-4 rounded border-gray-300 text-brand-navy accent-[#0F1C2E] flex-shrink-0 cursor-pointer">
+              <label class="text-xs text-gray-500 leading-relaxed cursor-pointer select-none">Saya memberikan persetujuan penggunaan data ini untuk konsultasi dan pengelolaan booking. Data disimpan hingga ada permintaan penghapusan melalui admin.</label>
+            </div>
+            <div id="formError" class="hidden bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg px-4 py-3" role="alert"></div>
+            <div class="pt-2 space-y-3">
+              <button type="submit" class="w-full bg-brand-navy hover:bg-slate-800 text-white font-medium py-3.5 px-6 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2 text-sm shadow-md active:scale-[0.99] touch-manipulation disabled:opacity-60 disabled:cursor-wait">
+                <span>Kirim permintaan</span><span class="text-brand-gold text-base ml-1">→</span>
+              </button>
+              <p class="text-[11px] text-gray-400 text-center leading-normal">Jadwal dan DP dikonfirmasi manual oleh admin. Tidak ada pembayaran otomatis.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="w-full max-w-7xl mx-auto px-4 xs:px-6 lg:px-12 py-6 sm:py-8 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 gap-3 border-t border-gray-200/60 mt-8 sm:mt-12 text-center sm:text-left">
+    <div>© Xavier Pro Wedding</div><div>Thoughtfully made for your special day.</div>
+  </footer>
+
+  <div id="toast" class="fixed bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 bg-brand-navy text-white px-5 py-4 rounded-xl shadow-2xl transition-all duration-300 transform translate-y-24 opacity-0 flex items-center justify-center sm:justify-start space-x-3 z-50 max-w-md mx-auto pointer-events-none">
+    <div class="w-2.5 h-2.5 rounded-full bg-brand-gold flex-shrink-0"></div>
+    <span id="toastMsg" class="text-xs sm:text-sm font-medium"></span>
+  </div>
+
+  <script>
+    let selectedPkg='makeup';
+    const form=document.querySelector('#bookingForm');
+    const makeupF=document.querySelector('#makeupField'),themeF=document.querySelector('#themeField'),customF=document.querySelector('#customField');
+    const errBox=document.querySelector('#formError');
+    // WIB date min
+    document.querySelector('#eventDate').min=new Date(Date.now()+7*3600000).toISOString().slice(0,10);
+
+    function selectPkg(el,pkg){
+      selectedPkg=pkg;
+      document.querySelectorAll('.service-card').forEach(c=>c.classList.remove('active'));
+      el.classList.add('active');
+      updateFields();
+    }
+    function updateFields(){
+      const mu=['makeup','makeup_dekor'].includes(selectedPkg),de=['dekor','makeup_dekor'].includes(selectedPkg),cu=selectedPkg==='custom';
+      makeupF.hidden=!mu; makeupF.querySelector('input').required=mu;
+      themeF.hidden=!de; themeF.querySelector('input').required=false;
+      customF.hidden=!cu; customF.querySelector('textarea').required=cu;
+    }
+    updateFields();
+
+    form.addEventListener('submit',async e=>{
+      e.preventDefault();
+      const btn=form.querySelector('button[type=submit]');
+      btn.disabled=true; errBox.classList.add('hidden');
+      try{
+        const f=Object.fromEntries(new FormData(form));
+        f.package=selectedPkg; f.consent=f.consent==='on';
+        f.makeupPeople=f.makeupPeople?Number(f.makeupPeople):undefined;
+        const r=await fetch('/api/bookings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(f)});
+        const d=await r.json();
+        if(!r.ok) throw new Error(d.error||'Permintaan gagal.');
+        // Success
+        const card=form.closest('.bg-white');
+        card.innerHTML=`<div class="text-center space-y-5 py-4"><span class="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-brand-gold uppercase block">TERIMA KASIH</span><h2 class="font-serif-heading fluid-card-title text-brand-navy font-normal">Permintaan tersimpan.</h2><p class="text-sm text-gray-600 leading-relaxed">Tim kami akan meninjau kebutuhan Anda. Pengiriman ini belum menjadi konfirmasi jadwal atau pembayaran.</p><p class="text-xs text-gray-400 break-all">Referensi: <strong>${d.reference}</strong></p><a href="index.html" class="inline-flex items-center text-sm text-brand-gold hover:text-brand-navy transition-colors">← Kembali ke website</a></div>`;
+        showToast('Permintaan booking berhasil dikirim!');
+      }catch(err){
+        errBox.textContent=err.message; errBox.classList.remove('hidden');
+        btn.disabled=false;
+      }
+    });
+
+    function showToast(msg){
+      const t=document.querySelector('#toast'),m=document.querySelector('#toastMsg');
+      m.textContent=msg;
+      t.classList.remove('translate-y-24','opacity-0','pointer-events-none');
+      t.classList.add('translate-y-0','opacity-100');
+      setTimeout(()=>{t.classList.remove('translate-y-0','opacity-100');t.classList.add('translate-y-24','opacity-0','pointer-events-none');},4000);
+    }
+  </script>
+</body>
+</html>

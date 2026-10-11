@@ -1,2 +1,23 @@
-import {test} from 'node:test';import assert from 'node:assert/strict';import {createApp} from '../server/app.js';
-test('reject impossible dates, whitespace-only requirements and wrong typed contact',async()=>{const {app,db}=createApp(':memory:');const s=app.listen(0,'127.0.0.1');await new Promise(r=>s.once('listening',r));const base=`http://127.0.0.1:${s.address().port}`;try{const baseData={name:'Client',phone:'081234567890',package:'custom',requirements:'Specific request',date:'2028-12-20',location:'Jakarta',consent:true};for(const invalid of [{date:'2028-02-31'},{requirements:'   '},{phone:81234567890}]){const r=await fetch(base+'/api/bookings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...baseData,...invalid})});assert.equal(r.status,400,JSON.stringify(invalid));}}finally{await new Promise(r=>s.close(r));db.close();}});
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { createTestDB } from './test-helper.js';
+import { createApp } from '../server/app.js';
+
+test('reject impossible dates, whitespace-only requirements and wrong typed contact', async () => {
+  const { cleanup, mysqlOptions } = await createTestDB();
+  const { app, db } = await createApp(mysqlOptions);
+  const s = app.listen(0, '127.0.0.1');
+  await new Promise(r => s.once('listening', r));
+  const base = `http://127.0.0.1:${s.address().port}`;
+  try {
+    const baseData = { name: 'Client', phone: '081234567890', package: 'custom', requirements: 'Specific request', date: '2028-12-20', location: 'Jakarta', consent: true };
+    for (const invalid of [{ date: '2028-02-31' }, { requirements: '   ' }, { phone: 81234567890 }]) {
+      const r = await fetch(base + '/api/bookings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...baseData, ...invalid }) });
+      assert.equal(r.status, 400, JSON.stringify(invalid));
+    }
+  } finally {
+    await new Promise(r => s.close(r));
+    await db.close();
+    await cleanup();
+  }
+});

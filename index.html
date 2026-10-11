@@ -1,1 +1,116 @@
-<!doctype html><html lang="id"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#0f1e3c"/><title>Xavier Pro Wedding — Booking & CMS</title></head><body><div id="root"></div><script type="module" src="/src/main.jsx"></script></body></html>
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
+  <meta name="theme-color" content="#0F1C2E"/>
+  <title>Xavier Pro Wedding — Booking & CMS</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        screens: {
+          'xs': '375px',
+          'sm': '640px',
+          'md': '768px',
+          'lg': '992px',
+          'xl': '1280px',
+          '2xl': '1536px',
+        },
+        extend: {
+          colors: {
+            brand: {
+              cream: '#F8F4EE',
+              navy: '#0F1C2E',
+              gold: '#C3924F',
+              'gold-light': '#D4A86A',
+              gray: '#6B7280',
+              'light-gray': '#E5E7EB',
+              border: '#E2E8F0',
+            }
+          },
+          fontFamily: {
+            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-cream: #F8F4EE;
+      --navy-dark: #0F1C2E;
+      --gold-accent: #C3924F;
+    }
+    body {
+      background-color: var(--bg-cream);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #374151;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    .font-serif-heading { font-family: 'Cormorant Garamond', serif; }
+    .fluid-hero-title { font-size: clamp(2.25rem, 6.5vw, 4rem); line-height: 1.08; }
+    .fluid-card-title { font-size: clamp(1.65rem, 4vw, 2.25rem); line-height: 1.15; }
+    .custom-input {
+      transition: all 0.2s ease-in-out;
+      border: 1px solid #E2E8F0;
+      background-color: #FFFFFF;
+      min-height: 46px;
+    }
+    .custom-input:focus {
+      outline: none;
+      border-color: var(--navy-dark);
+      box-shadow: 0 0 0 1px var(--navy-dark);
+    }
+    .service-card {
+      transition: all 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+    .service-card.active {
+      background-color: var(--navy-dark);
+      border-color: var(--navy-dark);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(15, 28, 46, 0.15);
+    }
+    .service-card.active .card-subtitle { color: #9CA3AF; }
+    .service-card:not(.active) { background-color: #FFFFFF; border-color: #E2E8F0; color: #1F2937; }
+    .service-card:not(.active):hover { border-color: #CBD5E1; transform: translateY(-1px); }
+    .service-card:not(.active) .card-subtitle { color: #6B7280; }
+    input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; opacity: 0.6; filter: invert(0.3); }
+    .custom-textarea {
+      transition: all 0.2s ease-in-out;
+      border: 1px solid #E2E8F0;
+      background-color: #FFFFFF;
+      min-height: 100px;
+      resize: vertical;
+    }
+    .custom-textarea:focus {
+      outline: none;
+      border-color: var(--navy-dark);
+      box-shadow: 0 0 0 1px var(--navy-dark);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-gold selection:text-white antialiased">
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>
