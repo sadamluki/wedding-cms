@@ -17,13 +17,21 @@ npm start
 
 Default: MySQL di `127.0.0.1:3306`, user `root` tanpa password, database `xavier_wedding`.
 
-Environment variables:
+Konfigurasi lewat file `.env` di root project (sudah di-gitignore, jangan commit). Salin template:
+
+```bash
+cp .env.example .env
+```
+
+Lalu edit isinya. `npm start` otomatis memuat `.env` (Node 22 `--env-file-if-exists`).
+
+Environment variables (bisa juga di-set langsung di shell, override `.env`):
 - `DB_HOST` — MySQL host (default: `127.0.0.1`)
 - `DB_PORT` — MySQL port (default: `3306`)
 - `DB_USER` — MySQL user (default: `root`)
 - `DB_PASSWORD` — MySQL password (default: kosong)
 - `DB_NAME` — nama database (default: `xavier_wedding`)
-- `DATABASE_URL` — alternatif URI lengkap (misal: `mysql://user:pass@host:3306/dbname`)
+- `DATABASE_URL` — alternatif URI lengkap (misal: `mysql://user:***@host:3306/dbname`)
 - `PORT` — port HTTP (default: `3100`)
 - `HOST` — bind address (default: `127.0.0.1`)
 - `COOKIE_SECURE` — set `1` untuk HTTPS
