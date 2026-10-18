@@ -33,9 +33,10 @@ app.get('/{*path}', (req, res, next) => {
   if (req.path.startsWith('/api/')) return next();
   res.sendFile(resolve(root, 'dist/index.html'));
 });
-app.use((err, req, res, next) =>
-  res.status(err.status || 500).json({ error: err.status === 400 ? 'Format permintaan tidak valid.' : 'Terjadi kesalahan server.' })
-);
+app.use((err, req, res, next) => {
+  console.error(`[${new Date().toISOString()}] ERROR ${req.method} ${req.path}:`, err.message, err.stack);
+  res.status(err.status || 500).json({ error: err.status === 400 ? 'Format permintaan tidak valid.' : 'Terjadi kesalahan server.' });
+});
 
 const port = Number(process.env.PORT || 3100);
 const host = process.env.HOST || '127.0.0.1';

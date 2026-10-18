@@ -65,7 +65,6 @@ Session cookie HttpOnly/SameSite Strict, berlaku 8 jam; token session dihash di 
 - **Soft-delete booking**: hapus dari tampilan aktif, dapat dipulihkan (restore).
 - **Upload bukti transfer DP**: JPG/PNG/WebP/PDF, max 5MB per booking.
 - **WhatsApp** hanya tautan dengan pesan awal, tidak mengirim otomatis.
-- **Social media**: Instagram, Facebook, TikTok fields.
 - Status workflow: baru → dihubungi → menunggu_dp → dp_diterima → dikonfirmasi → selesai/batal.
 - DP nominal rupiah (manual, tanpa payment gateway).
 - Data tidak kedaluwarsa otomatis.

@@ -41,7 +41,7 @@ export async function createApp(options) {
   // Serve uploaded proofs
   app.use('/uploads/proofs', express.static(uploadsDir));
 
-  const createBooking = (admin = false) => async (req, res) => {
+  const createBooking = (admin = false) => async (req, res, next) => {
     const b = req.body || {};
     const packages = ['makeup', 'makeup_dekor', 'dekor', 'custom'];
     const today = todayWIB();
@@ -62,21 +62,25 @@ export async function createApp(options) {
     )
       return res.status(400).json({ error: 'Lengkapi data dan kebutuhan paket dengan benar.' });
 
-    const id = randomUUID();
-    const data = {
-      name: b.name.trim(),
-      phone: b.phone || '',
-      package: b.package,
-      date: b.date,
-      location: b.location.trim(),
-      makeupPeople: b.makeupPeople,
-      theme: b.theme,
-      requirements: b.requirements,
-      consent: !admin,
-      source: admin ? 'admin' : 'public',
-    };
-    await db.prepare('INSERT INTO bookings(id,created,data) VALUES(?,?,?)').run(id, new Date().toISOString(), JSON.stringify(data));
-    res.status(201).json({ reference: id });
+    try {
+      const id = randomUUID();
+      const data = {
+        name: b.name.trim(),
+        phone: b.phone || '',
+        package: b.package,
+        date: b.date,
+        location: b.location.trim(),
+        makeupPeople: b.makeupPeople,
+        theme: b.theme,
+        requirements: b.requirements,
+        consent: !admin,
+        source: admin ? 'admin' : 'public',
+      };
+      await db.prepare('INSERT INTO bookings(id,created,data) VALUES(?,?,?)').run(id, new Date().toISOString(), JSON.stringify(data));
+      res.status(201).json({ reference: id });
+    } catch (err) {
+      next(err);
+    }
   };
 
   app.post('/api/bookings', createBooking());
