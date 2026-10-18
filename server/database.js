@@ -7,7 +7,7 @@ export const tables = [
     data JSON NOT NULL,
     status VARCHAR(20) NOT NULL DEFAULT 'baru',
     dp BIGINT NOT NULL DEFAULT 0,
-    notes TEXT NOT NULL,
+    notes VARCHAR(5000) NOT NULL DEFAULT '',
     deleted TINYINT(1) NOT NULL DEFAULT 0,
     deleted_at VARCHAR(30) DEFAULT NULL,
     proof_path VARCHAR(500) DEFAULT NULL
@@ -43,8 +43,16 @@ export async function openMySQL(options) {
       await initConn.query(`ALTER TABLE bookings ADD COLUMN deleted_at VARCHAR(30) DEFAULT NULL`);
     if (!colNames.includes('proof_path'))
       await initConn.query(`ALTER TABLE bookings ADD COLUMN proof_path VARCHAR(500) DEFAULT NULL`);
-    // Ensure notes has a default value (older schema may lack it)
-    await initConn.query(`ALTER TABLE bookings MODIFY COLUMN notes TEXT NOT NULL DEFAULT ''`);
+    // Ensure notes has a default value (older MariaDB TEXT columns can't have DEFAULT)
+    // Convert to VARCHAR(5000) which supports DEFAULT '' on all MariaDB/MySQL versions
+    const [notesCol] = await initConn.query(
+      `SELECT COLUMN_TYPE, COLUMN_DEFAULT FROM INFORMATION_SCHEMA.COLUMNS
+       WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'bookings' AND COLUMN_NAME = 'notes'`
+    );
+    const notesType = (notesCol[0]?.COLUMN_TYPE || '').toLowerCase();
+    if (notesType === 'text') {
+      await initConn.query(`ALTER TABLE bookings MODIFY COLUMN notes VARCHAR(5000) NOT NULL DEFAULT ''`);
+    }
   } finally {
     await initConn.end();
   }
