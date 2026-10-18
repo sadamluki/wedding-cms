@@ -43,6 +43,8 @@ export async function openMySQL(options) {
       await initConn.query(`ALTER TABLE bookings ADD COLUMN deleted_at VARCHAR(30) DEFAULT NULL`);
     if (!colNames.includes('proof_path'))
       await initConn.query(`ALTER TABLE bookings ADD COLUMN proof_path VARCHAR(500) DEFAULT NULL`);
+    // Ensure notes has a default value (older schema may lack it)
+    await initConn.query(`ALTER TABLE bookings MODIFY COLUMN notes TEXT NOT NULL DEFAULT ''`);
   } finally {
     await initConn.end();
   }
